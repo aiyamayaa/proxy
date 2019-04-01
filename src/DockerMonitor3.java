@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Monitoring the docker nums .if changed tell the controller
+* */
 public class DockerMonitor3 {
     volatile int cont = -1;
     BufferedReader br = null;
@@ -15,7 +17,11 @@ public class DockerMonitor3 {
             while((br.readLine())!=null){
                 n++;
             }
-            this.cont = n;
+            synchronized (this){
+                this.cont = n;
+            }
+
+
             //System.out.println(cont);
         } catch (IOException e) {
             e.printStackTrace();
